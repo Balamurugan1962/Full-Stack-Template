@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  frontend:
+    volumes:
+      - ./frontend:/app # Mount local code
+      - /app/node_modules # Avoid overwriting node_modules
+    command: npm run dev # Run Next.js dev server
+    ports:
+      - "3000:3000"
+
+  backend:
+    volumes:
+      - ./backend:/app # Mount backend source
+      - ~/.m2:/root/.m2 # Cache Maven deps
+    command: mvn spring-boot:run
+    ports:
+      - "8080:8080" # Expose backend in dev
